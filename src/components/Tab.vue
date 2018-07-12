@@ -67,8 +67,9 @@ import BossCheck from './BossCheck'
 import Tweet from './Tweet'
 
 let prevId, prevTabIds
+const isDevelopment = process.env.NODE_ENV === 'development'
 const sound = new Howl({
-  src: ['sound.mp3'],
+  src: [isDevelopment ? 'sound.mp3' : 'http://jsrun.it/assets/W/v/C/p/WvCpZ.mp3'],
   volume: 0.5
 })
 
