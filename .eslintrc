@@ -1,0 +1,27 @@
+---
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 2017
+  sourceType: module
+
+env:
+  browser: true
+
+extends:
+  - standard
+  - plugin:vue/recommended
+  - plugin:prettier/recommended
+
+rules:
+  no-new:
+    - warn
+
+  vue/max-attributes-per-line:
+    - error
+    - singleline: 3
+
+  prettier/prettier:
+    - error
+    - printWidth: 120
+      singleQuote: true
+      semi: false
