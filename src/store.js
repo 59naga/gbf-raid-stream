@@ -39,6 +39,12 @@ export default () => {
     mutations: {
       // initialize / lifecycles
       tweet(state, payload) {
+        for (var i = 0; i < state.tweets.length; i++) {
+          if (state.tweets[i].id === payload.id) {
+            state.tweets.splice(i, 1)
+            i--
+          }
+        }
         state.tweets.unshift(payload)
         state.tweets.pop()
       },
