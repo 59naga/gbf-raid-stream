@@ -40,6 +40,7 @@ export default () => {
       // initialize / lifecycles
       tweet(state, payload) {
         state.tweets.unshift(payload)
+        state.tweets.pop()
       },
       tweets(state, payload) {
         state.tweets = payload
