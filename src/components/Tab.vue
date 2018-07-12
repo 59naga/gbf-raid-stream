@@ -66,7 +66,7 @@ import { Howl } from 'howler'
 import BossCheck from './BossCheck'
 import Tweet from './Tweet'
 
-let prevIds, prevTabIds
+let prevId, prevTabIds
 const sound = new Howl({
   src: ['sound.mp3'],
   volume: 0.5
@@ -92,14 +92,15 @@ export default {
         return target
       }, [])
 
-      const ids = target.map(({ tweet }) => tweet.id).join(',')
-      const tabIds = tab.join(',')
-      if (prevIds && prevIds !== ids && prevTabIds === tabIds) {
+      // 絞り込みが変更されておらず、「１件目のidが代わったとき」に音を鳴らす
+      const id = (target.map(({ tweet }) => tweet.id) || [])[0]
+      const tabIds = tab
+      if (prevId && prevId !== id && prevTabIds === tabIds) {
         if (options.sound) {
           sound.play()
         }
       }
-      prevIds = ids
+      prevId = id
       prevTabIds = tabIds
 
       target.length = target.length > 100 ? 100 : target.length
