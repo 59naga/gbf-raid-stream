@@ -18,7 +18,6 @@ function fetchCache(gbfRaidServer) {
 
 export default () => {
   const jsonBossesUrl = 'https://raw.githubusercontent.com/59naga/gbf-raid-bosses/master/dist/gbf-raid-bosses.json'
-  const jsonIndexesUrl = 'https://raw.githubusercontent.com/59naga/gbf-raid-bosses/master/dist/indexes.json'
   const gbfRaidServerUrl = 'https://gbf-raid-server.herokuapp.com/'
   const gbfRaidServer = createIoClient(gbfRaidServerUrl)
 
@@ -76,11 +75,16 @@ export default () => {
     },
     actions: {
       async initialize({ commit }) {
-        const { bosses, indexes, tweets } = await Promise.props({
-          bosses: axios(jsonBossesUrl).then(res => res.data),
-          indexes: axios(jsonIndexesUrl).then(res => res.data),
-          tweets: fetchCache(gbfRaidServer)
+        const { tweets, bosses } = await Promise.props({
+          tweets: fetchCache(gbfRaidServer),
+          bosses: axios(jsonBossesUrl).then(res => res.data)
         })
+
+        const indexes = bosses.reduce((indexes, boss, index) => {
+          indexes[boss.name] = index
+          indexes[boss.name_en] = index
+          return indexes
+        }, {})
 
         commit('tweets', tweets)
         commit('bosses', bosses)
