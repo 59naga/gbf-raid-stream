@@ -66,6 +66,7 @@ li figure {
   vertical-align: middle;
   min-width: 2.5em;
   width: 2.5em;
+  max-height: 2.2em;
   padding: 0;
   margin: 0;
   overflow: hidden;
