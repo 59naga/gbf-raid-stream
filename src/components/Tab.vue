@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { Howl } from 'howler'
 import BossCheck from './BossCheck'
 import Tweet from './Tweet'
@@ -72,6 +73,8 @@ const sound = new Howl({
   src: [isDevelopment ? 'sound.mp3' : 'http://jsrun.it/assets/W/v/C/p/WvCpZ.mp3'],
   volume: 0.5
 })
+
+const today = moment().format('YYYY-MM-DD')
 
 export default {
   components: {
@@ -115,7 +118,23 @@ export default {
       return this.$store.state.bosses.filter(boss => boss.category.match(/^impossible/))
     },
     event() {
-      return this.$store.state.bosses.filter(boss => boss.category === 'event')
+      const event = []
+      const limited = []
+      this.$store.state.bosses.forEach(boss => {
+        if (boss.category.match(/^event/)) {
+          if (boss.category === 'event') {
+            event.push(boss)
+          }
+          if (boss.limit) {
+            const [start, end] = boss.limit.split(',')
+            if (start <= today && today <= end) {
+              limited.push(boss)
+            }
+          }
+        }
+      })
+      // 期間限定イベントのボスを先に表示する
+      return [...limited, ...event]
     },
     misc() {
       return this.$store.state.bosses.filter(boss => boss.category.match(/^misc/))

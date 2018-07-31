@@ -23,7 +23,7 @@ Vue.filter('localize', function(name, state) {
   const boss = state.bosses[index] || {}
   const category = boss.category || 'unknown'
   const nameLocaled = boss.name || name
-  if (category === 'event') {
+  if (category.match(/event\w+/)) {
     return nameLocaled
   }
   if (!boss.name) {
