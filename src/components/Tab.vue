@@ -55,7 +55,7 @@
         </label>
       </div>
       <h1>
-        <a href="https://github.com/59naga/gbf-raid-stream">gbf-raid-stream v0.0.0</a>
+        <a href="https://github.com/59naga/gbf-raid-stream">gbf-raid-stream v{{ VERSION }}</a>
       </h1>
     </footer>
   </div>
@@ -80,6 +80,11 @@ export default {
   components: {
     BossCheck,
     Tweet
+  },
+  data() {
+    return {
+      VERSION // via (webpack.DefinePlugin of webpack.config.babel.js)
+    }
   },
   computed: {
     target() {

@@ -1,3 +1,5 @@
+import webpack from 'webpack'
+import { version } from './package'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
 export default {
@@ -28,5 +30,10 @@ export default {
       }
     ]
   },
-  plugins: [new VueLoaderPlugin()]
+  plugins: [
+    new VueLoaderPlugin(),
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(version)
+    })
+  ]
 }

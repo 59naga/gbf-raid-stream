@@ -4,6 +4,9 @@ parserOptions:
   ecmaVersion: 2017
   sourceType: module
 
+globals:
+  VERSION: true
+  
 env:
   browser: true
 
