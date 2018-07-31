@@ -17,7 +17,7 @@ function fetchCache(gbfRaidServer) {
 }
 
 export default () => {
-  const jsonBossesUrl = 'https://raw.githubusercontent.com/59naga/gbf-raid-bosses/master/dist/gbf-raid-bosses.json'
+  const jsonBossesUrl = 'https://unpkg.com/@59naga/gbf-data/dist/raid.json'
   const gbfRaidServerUrl = 'https://gbf-raid-server.herokuapp.com/'
   const gbfRaidServer = createIoClient(gbfRaidServerUrl)
 
