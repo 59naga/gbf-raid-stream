@@ -1,6 +1,6 @@
 <template>
   <li @click="doCopy(data.tweet)" :class="{copied}">
-    <figure><img :src="data.boss.image+':small'" alt=""></figure>
+    <figure><img :src="data.boss.image" alt=""></figure>
     <figcaption>
       <h2>{{ data.boss.name | localize($store.state) }}</h2>
       <p>

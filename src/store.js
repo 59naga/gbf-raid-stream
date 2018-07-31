@@ -77,7 +77,15 @@ export default () => {
       async initialize({ commit }) {
         const { tweets, bosses } = await Promise.props({
           tweets: fetchCache(gbfRaidServer),
-          bosses: axios(jsonBossesUrl).then(res => res.data)
+          bosses: axios(jsonBossesUrl).then(res =>
+            res.data.map(boss => {
+              // pbs.twiimgの画像で末尾がjpgなら軽量版のurlに変更する
+              if (boss.image.match(/pbs.twimg.com.+?.?jpg$/)) {
+                boss.image += ':small'
+              }
+              return boss
+            })
+          )
         })
 
         const indexes = bosses.reduce((indexes, boss, index) => {
