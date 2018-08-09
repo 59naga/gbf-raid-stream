@@ -38,14 +38,18 @@ export default () => {
     mutations: {
       // initialize / lifecycles
       tweet(state, payload) {
+        let isUnique = true
         for (var i = 0; i < state.tweets.length; i++) {
           if (state.tweets[i].id === payload.id) {
             state.tweets.splice(i, 1)
+            isUnique = false
             i--
           }
         }
         state.tweets.unshift(payload)
-        state.tweets.pop()
+        if (isUnique) {
+          state.tweets.pop()
+        }
       },
       tweets(state, payload) {
         state.tweets = payload
