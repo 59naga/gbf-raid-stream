@@ -1,6 +1,11 @@
 <template>
   <div>
-    <ul v-if="!$store.state.initialized"><li>Loading...</li></ul>
+    <ul v-if="!$store.state.initialized" class="loading">
+      <li>
+        <h2>Now loading...</h2>
+        <img src="../loading_summer.gif" alt="">
+      </li>
+    </ul>
     <header v-if="$store.state.initialized">
       <ul v-if="target.length === 0"><li>なんもないぜ</li></ul>
       <ul v-else>
@@ -27,30 +32,30 @@
 
       <div>
         <label>
-          <input type="radio" v-model="$store.state.options.index" value="0">
+          <input v-model="$store.state.options.index" type="radio" value="0">
           Normal
         </label>
         <label>
-          <input type="radio" v-model="$store.state.options.index" value="1">
+          <input v-model="$store.state.options.index" type="radio" value="1">
           HighLevel
         </label>
         <label>
-          <input type="radio" v-model="$store.state.options.index" value="2">
+          <input v-model="$store.state.options.index" type="radio" value="2">
           Event
         </label>
         <label>
-          <input type="radio" v-model="$store.state.options.index" value="3">
+          <input v-model="$store.state.options.index" type="radio" value="3">
           Misc
         </label>
-        <button @click="$store.commit('reset')" type="button">Reset</button>
+        <button type="button" @click="$store.commit('reset')">Reset</button>
       </div>
       <div>
         <label>
-          <input type="radio" v-model="$store.state.options.index" value="-1">
+          <input v-model="$store.state.options.index" type="radio" value="-1">
           Hide
         </label>
         <label>
-          <input type="checkbox" v-model="$store.state.options.sound">
+          <input v-model="$store.state.options.sound" type="checkbox">
           Sound On
         </label>
       </div>
@@ -149,6 +154,25 @@ export default {
 </script>
 
 <style scoped>
+.loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.loading > * {
+  display: block;
+  text-align: center;
+  font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
+}
+.loading img {
+  width: 100px;
+}
 ul {
   list-style-type: none;
   margin: 0;

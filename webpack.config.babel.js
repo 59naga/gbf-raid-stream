@@ -27,7 +27,11 @@ export default {
       {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader']
-      }
+      },
+      {
+        test: /\.(gif|png)$/,
+        loaders: 'url-loader'
+      },
     ]
   },
   plugins: [
