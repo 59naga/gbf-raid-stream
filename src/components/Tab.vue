@@ -3,7 +3,7 @@
     <ul v-if="!$store.state.initialized" class="loading">
       <li>
         <h2>Now loading...</h2>
-        <img src="loading_summer.gif" alt="">
+        <img src="https://gbf-raid-stream.now.sh/loading_summer.gif" alt="">
       </li>
     </ul>
     <header v-if="$store.state.initialized">

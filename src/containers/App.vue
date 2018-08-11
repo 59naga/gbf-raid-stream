@@ -20,8 +20,8 @@ div::after {
   bottom: 0;
   right: 0;
   content: '';
-  background: url('http://jsrun.it/assets/Q/y/i/3/Qyi3U.png') no-repeat center center;
-  opacity: 0.05;
+  background: url('https://gbf-raid-stream.now.sh/background.png') no-repeat center center;
+  opacity: 0.1;
   z-index: -1;
 }
 </style>
