@@ -3,7 +3,7 @@
     <ul v-if="!$store.state.initialized" class="loading">
       <li>
         <h2>Now loading...</h2>
-        <img src="../loading_summer.gif" alt="">
+        <img src="loading_summer.gif" alt="">
       </li>
     </ul>
     <header v-if="$store.state.initialized">
@@ -75,7 +75,7 @@ import Tweet from './Tweet'
 let prevId, prevTabIds
 const isDevelopment = process.env.NODE_ENV === 'development'
 const sound = new Howl({
-  src: [isDevelopment ? 'sound.mp3' : 'http://jsrun.it/assets/W/v/C/p/WvCpZ.mp3'],
+  src: [isDevelopment ? 'sound.mp3' : 'https://gbf-raid-stream.now.sh/sound.mp3'],
   volume: 0.5
 })
 
