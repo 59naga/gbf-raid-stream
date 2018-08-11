@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import webpack from 'webpack'
 import { version } from './package'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
@@ -15,13 +14,6 @@ export default {
     },
     extensions: ['.js', '.vue']
   },
-  entry: {
-    index: './src'
-  },
-  output: {
-    filename: 'bundle/[name].js',
-    path: resolve(__dirname, 'dist')
-  },
   module: {
     rules: [
       {
@@ -35,7 +27,11 @@ export default {
       {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader']
-      }
+      },
+      {
+        test: /\.(gif|png)$/,
+        loaders: 'url-loader'
+      },
     ]
   },
   plugins: [
