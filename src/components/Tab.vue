@@ -60,7 +60,7 @@
         </label>
       </div>
       <h1>
-        <a href="https://github.com/59naga/gbf-raid-stream" target="_blank">gbf-raid-stream v{{ VERSION }}</a>
+        <a href="https://github.com/59naga/gbf-raid-stream/releases" target="_blank">gbf-raid-stream v{{ VERSION }}</a>
       </h1>
     </footer>
   </div>
