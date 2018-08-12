@@ -20,7 +20,7 @@ div::after {
   bottom: 0;
   right: 0;
   content: '';
-  background: url('https://gbf-raid-stream.now.sh/background.png') no-repeat center center;
+  background: url('background.png') no-repeat center center;
   opacity: 0.1;
   z-index: -1;
 }
