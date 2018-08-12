@@ -108,7 +108,7 @@ export default {
 
       // 絞り込みが変更されておらず、「１件目のidが代わったとき」に音を鳴らす
       const id = (target.map(({ tweet }) => tweet.id) || [])[0]
-      const tabIds = tab
+      const tabIds = tab.join(',')
       if (prevId && prevId !== id && prevTabIds === tabIds) {
         if (options.sound) {
           sound.play()
