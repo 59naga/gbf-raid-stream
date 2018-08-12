@@ -26,22 +26,11 @@ yarn start
 
 ### テスト
 
-古く危うい手法ですが、`yarn start`でコンパイル結果を`localhost`上で確認し、それをそのままビルドしてリリースする、という形での開発になります。
-
-karmaなどを使用したテストは現在考えていませんが、機能が増え、メンテナンスが困難になる前に、徐々に取り入れようと思っています。
+検討中(jestでいいかなって思ってる)
 
 ### ビルド
 
-`yarn build`でリリース用の難読化されたコードを`dist/main.js`として出力します。
-出力されたファイルはブラウザ用に依存ファイルを全て含んだ独立したモジュールとなるため、[コード共有サイト][2]で動作させることができます。
-
-#### TODO
-
-[このツイートがバズって][3]しまったため、ユーザーのアクセス起点を`http://jsrun.it/59naga/gbf-raid-stream-v0.0.0`にして、リリースを考える必要があります。
-
-機能追加でバージョンアップさせても上記urlと矛盾するため、リダイレクトさせるなどを検討中です。
-
-> また、jsdoitに`dist/main.js`をコピペする作業が果てしなく重いです。数分掛かります
+`npm run deploy`で`dist`以下ににコードを生成したのち、静的ファイルとして[now](https://qiita.com/nkzawa/items/8bf62549f79ebbcaafd8)にアップロードします。
 
 [0]: https://github.com/creationix/nvm#readme
 [1]: https://github.com/yarnpkg/yarn#readme
