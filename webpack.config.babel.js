@@ -1,9 +1,17 @@
 import webpack from 'webpack'
+import { resolve } from 'path'
 import { version } from './package'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
 export default {
   mode: process.env.NODE_ENV || 'development',
+  entry: {
+    main: './src'
+  },
+  output: {
+    filename: 'bundle/[name].js',
+    path: resolve(__dirname, 'dist')
+  },
   devServer: {
     contentBase: 'dist'
   },
@@ -22,6 +30,7 @@ export default {
       },
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
@@ -31,7 +40,7 @@ export default {
       {
         test: /\.(gif|png)$/,
         loaders: 'url-loader'
-      },
+      }
     ]
   },
   plugins: [

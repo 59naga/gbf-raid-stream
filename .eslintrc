@@ -16,9 +16,6 @@ extends:
   - plugin:prettier/recommended
 
 rules:
-  no-new:
-    - warn
-
   vue/max-attributes-per-line:
     - error
     - singleline: 3
