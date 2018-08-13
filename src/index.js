@@ -1,15 +1,15 @@
 ;(async () => {
-  const Vue = (await import(/* webpackChunkName: "vue" */ 'vue')).default
-  const Vuex = (await import(/* webpackChunkName: "vuex" */ 'vuex')).default
-  const VueToasted = (await import(/* webpackChunkName: "vue-toasted" */ 'vue-toasted')).default
-  const VueClipboard2 = (await import(/* webpackChunkName: "vue-clipboard2" */ 'vue-clipboard2')).default
-  const VueMoment = (await import(/* webpackChunkName: "vue-moment" */ 'vue-moment')).default
+  const Vue = await import(/* webpackChunkName: "vue" */ 'vue')
+  const Vuex = await import(/* webpackChunkName: "vuex" */ 'vuex')
+  const VueToasted = await import(/* webpackChunkName: "vue-toasted" */ 'vue-toasted')
+  const VueClipboard2 = await import(/* webpackChunkName: "vue-clipboard2" */ 'vue-clipboard2')
+  const VueMoment = await import(/* webpackChunkName: "vue-moment" */ 'vue-moment')
 
   await import('moment/locale/es')
   await import('moment/locale/ja')
-  const moment = (await import(/* webpackChunkName: "moment" */ 'moment')).default
+  const moment = await import(/* webpackChunkName: "moment" */ 'moment')
 
-  const createStore = (await import(/* webpackChunkName: "store" */ './store')).default
+  const createStore = await import(/* webpackChunkName: "store" */ './store')
 
   const App = () => import('./containers/App')
   const Tab = () => import('./components/Tab')
