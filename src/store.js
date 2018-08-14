@@ -4,6 +4,11 @@ import Promise from 'bluebird'
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
+import Visibility from 'visibilityjs'
+
+const jsonBossesUrl = 'https://unpkg.com/@59naga/gbf-data/dist/raid.json'
+const gbfRaidServerUrl = 'https://gbf-raid-server.herokuapp.com/'
+
 function fetchCache(gbfRaidServer) {
   return new Promise((resolve, reject) => {
     gbfRaidServer.emit('gbf-raid-server:cache', (error, tweets) => {
@@ -17,10 +22,6 @@ function fetchCache(gbfRaidServer) {
 }
 
 export default () => {
-  const jsonBossesUrl = 'https://unpkg.com/@59naga/gbf-data/dist/raid.json'
-  const gbfRaidServerUrl = 'https://gbf-raid-server.herokuapp.com/'
-  const gbfRaidServer = createIoClient(gbfRaidServerUrl)
-
   const store = new Vuex.Store({
     state: {
       tabs: [[]],
@@ -60,6 +61,9 @@ export default () => {
       indexes(state, payload) {
         state.indexes = payload
       },
+      initialize(state) {
+        state.initialized = false
+      },
       initialized(state) {
         state.initialized = true
       },
@@ -78,7 +82,9 @@ export default () => {
       }
     },
     actions: {
-      async initialize({ commit }) {
+      async initialize({ commit }, gbfRaidServer) {
+        commit('initialize')
+
         const { tweets, bosses } = await Promise.props({
           tweets: fetchCache(gbfRaidServer),
           bosses: axios(jsonBossesUrl).then(res =>
@@ -106,9 +112,24 @@ export default () => {
     }
   })
 
-  store.dispatch('initialize')
-  gbfRaidServer.on('gbf-raid-server:tweet', tweet => {
-    store.commit('tweet', tweet)
+  // ウィンドウが非アクティブになった時socket.ioを切断し、再度アクティブになった時にinitializeを再度実行する
+  const onVisble = () => {
+    const gbfRaidServer = createIoClient(gbfRaidServerUrl)
+    store.dispatch('initialize', gbfRaidServer).then(() => {
+      gbfRaidServer.on('gbf-raid-server:tweet', tweet => {
+        store.commit('tweet', tweet)
+      })
+    })
+    return gbfRaidServer
+  }
+
+  let gbfRaidServer = onVisble()
+  Visibility.change((event, state) => {
+    if (state === 'visible') {
+      gbfRaidServer = onVisble()
+    } else {
+      gbfRaidServer.close()
+    }
   })
 
   return store
