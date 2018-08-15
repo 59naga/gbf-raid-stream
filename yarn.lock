@@ -1022,9 +1022,9 @@ babel-loader@^8.0.0-beta.4:
     mkdirp "^0.5.1"
     util.promisify "^1.0.0"
 
-babel-plugin-experimental-syntax-dynamic-import@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-experimental-syntax-dynamic-import/-/babel-plugin-experimental-syntax-dynamic-import-0.0.1.tgz#23256bc2126056843dfddd724abea7c255b61663"
+babel-plugin-transform-dynamic-import-default@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-dynamic-import-default/-/babel-plugin-transform-dynamic-import-default-0.0.3.tgz#de3532282ca27edcdd15cf2ca5f4df01a44ac5af"
 
 babylon@7.0.0-beta.44:
   version "7.0.0-beta.44"

@@ -17,7 +17,7 @@
     "axios": "^0.18.0",
     "babel-eslint": "^8.2.5",
     "babel-loader": "^8.0.0-beta.4",
-    "babel-plugin-experimental-syntax-dynamic-import": "^0.0.1",
+    "babel-plugin-transform-dynamic-import-default": "^0.0.3",
     "bluebird": "^3.5.1",
     "conventional-github-releaser": "^3.1.2",
     "css-loader": "^1.0.0",
