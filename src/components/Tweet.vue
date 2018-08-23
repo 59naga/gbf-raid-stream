@@ -21,8 +21,11 @@ export default {
   props: {
     data: { type: Object, required: true }
   },
-  data() {
-    return { copied: false }
+  computed: {
+    copied(){
+      const copied = this.$store.state.copied
+      return copied.indexOf(this.data.tweet.id) > -1;
+    }
   },
   methods: {
     async doCopy(tweet) {
@@ -37,7 +40,7 @@ export default {
         duration: 1000
       })
 
-      this.copied = true
+      this.$store.commit('copied', tweet)
     }
   }
 }

@@ -54,6 +54,7 @@ export default () => {
   const store = new Vuex.Store({
     state: {
       tabs: [[]],
+      copied: [],
       options: {
         index: 0,
         sound: false
@@ -64,7 +65,7 @@ export default () => {
       indexes: {},
       initialized: false
     },
-    plugins: [createPersistedState({ paths: ['tabs', 'options'] })],
+    plugins: [createPersistedState({ paths: ['tabs', 'copied', 'options'] })],
     mutations: {
       // initialize / lifecycles
       tweet(state, payload) {
@@ -107,6 +108,16 @@ export default () => {
           state.tabs[0].push(payload)
         } else {
           state.tabs[0].splice(index, 1)
+        }
+      },
+      copied(state, { id }) {
+        if (state.copied.indexOf(id) > -1) {
+          return
+        }
+
+        state.copied.unshift(id)
+        if (state.copied.length > 10) {
+          state.copied.pop()
         }
       }
     },
