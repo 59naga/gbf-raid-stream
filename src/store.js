@@ -8,7 +8,34 @@ import isMobile from 'is-mobile'
 import Visibility from 'visibilityjs'
 
 const jsonBossesUrl = 'https://unpkg.com/@59naga/gbf-data/dist/raid.json'
-const gbfRaidServerUrl = 'https://gbf-raid-server.herokuapp.com/'
+const gbfRaidServerUrls = ['https://gbf-raid-server.herokuapp.com/', 'https://gbf-raid-server-sub.herokuapp.com/']
+
+function createSocketAsync(urls) {
+  const firstFulfilled = Promise.race(
+    urls.map(url =>
+      new Promise((resolve, reject) => {
+        const client = createIoClient(url)
+        client.on('connect', () => {
+          resolve(client)
+        })
+        client.on('error', error => {
+          client.close()
+          reject(error)
+        })
+      }).then(client => {
+        // 始めの接続以外を破棄
+        ;(async resolve => {
+          const first = await firstFulfilled
+          if (first !== client) {
+            client.disconnect()
+          }
+        })()
+        return client
+      })
+    )
+  )
+  return firstFulfilled
+}
 
 function fetchCache(gbfRaidServer) {
   return new Promise((resolve, reject) => {
@@ -23,6 +50,7 @@ function fetchCache(gbfRaidServer) {
 }
 
 export default () => {
+  let gbfRaidServer
   const store = new Vuex.Store({
     state: {
       tabs: [[]],
@@ -83,21 +111,32 @@ export default () => {
       }
     },
     actions: {
-      async initialize({ commit }, gbfRaidServer) {
+      async pause() {
+        if ((gbfRaidServer && gbfRaidServer.on) === false) {
+          // 接続が確立していない（gbfRaidServerがない）場合スキップ
+          return
+        }
+
+        gbfRaidServer.close()
+      },
+      async initialize({ commit }) {
         commit('initialize')
 
-        const { tweets, bosses } = await Promise.props({
-          tweets: fetchCache(gbfRaidServer),
-          bosses: axios(jsonBossesUrl).then(res =>
-            res.data.map(boss => {
-              // pbs.twiimgの画像で末尾がjpgなら軽量版のurlに変更する
-              if (boss.image.match(/pbs.twimg.com.+?.?jpg$/)) {
-                boss.image += ':small'
-              }
-              return boss
-            })
-          )
+        gbfRaidServer = await createSocketAsync(gbfRaidServerUrls)
+        gbfRaidServer.on('gbf-raid-server:tweet', tweet => {
+          store.commit('tweet', tweet)
         })
+
+        const tweets = await fetchCache(gbfRaidServer)
+        const bosses = await axios(jsonBossesUrl).then(res =>
+          res.data.map(boss => {
+            // pbs.twiimgの画像で末尾がjpgなら軽量版のurlに変更する
+            if (boss.image.match(/pbs.twimg.com.+?.?jpg$/)) {
+              boss.image += ':small'
+            }
+            return boss
+          })
+        )
 
         const indexes = bosses.reduce((indexes, boss, index) => {
           indexes[boss.name] = index
@@ -115,22 +154,16 @@ export default () => {
 
   // ウィンドウが非アクティブになった時socket.ioを切断し、再度アクティブになった時にinitializeを再度実行する
   const onVisble = () => {
-    const gbfRaidServer = createIoClient(gbfRaidServerUrl)
-    store.dispatch('initialize', gbfRaidServer).then(() => {
-      gbfRaidServer.on('gbf-raid-server:tweet', tweet => {
-        store.commit('tweet', tweet)
-      })
-    })
-    return gbfRaidServer
+    store.dispatch('initialize')
   }
 
-  let gbfRaidServer = onVisble()
+  onVisble()
   if (isMobile()) {
     Visibility.change((event, state) => {
       if (state === 'visible') {
-        gbfRaidServer = onVisble()
+        onVisble()
       } else {
-        gbfRaidServer.close()
+        store.dispatch('pause')
       }
     })
   }
