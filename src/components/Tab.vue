@@ -3,7 +3,7 @@
     <ul v-if="!$store.state.initialized" class="loading">
       <li>
         <h2>Now loading...</h2>
-        <img src="loading_summer.gif" alt="">
+        <img src="loading.gif" alt="">
       </li>
     </ul>
     <header v-if="$store.state.initialized">
