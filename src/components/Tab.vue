@@ -1,13 +1,17 @@
 <template>
   <div>
-    <ul v-if="!$store.state.initialized" class="loading">
+    <ul v-if="!$store.state.initialized" class="status">
       <li>
         <h2>Now loading...</h2>
         <img src="loading.gif" alt="">
       </li>
     </ul>
     <header v-if="$store.state.initialized">
-      <ul v-if="target.length === 0"><li>なんもないぜ</li></ul>
+      <ul v-if="target.length === 0" class="status">
+        <li>
+          <h2>なんもないぜぇ...</h2>
+        </li>
+      </ul>
       <ul v-else>
         <tweet
           v-for="data in target"
@@ -154,7 +158,7 @@ export default {
 </script>
 
 <style scoped>
-.loading {
+.status {
   position: absolute;
   top: 0;
   right: 0;
@@ -165,12 +169,12 @@ export default {
   align-items: center;
   height: 100vh;
 }
-.loading > * {
+.status > * {
   display: block;
   text-align: center;
   font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
 }
-.loading img {
+.status img {
   width: 100px;
 }
 ul {
