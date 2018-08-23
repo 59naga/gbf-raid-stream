@@ -4,6 +4,7 @@ import Promise from 'bluebird'
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
+import isMobile from 'is-mobile'
 import Visibility from 'visibilityjs'
 
 const jsonBossesUrl = 'https://unpkg.com/@59naga/gbf-data/dist/raid.json'
@@ -124,13 +125,15 @@ export default () => {
   }
 
   let gbfRaidServer = onVisble()
-  Visibility.change((event, state) => {
-    if (state === 'visible') {
-      gbfRaidServer = onVisble()
-    } else {
-      gbfRaidServer.close()
-    }
-  })
+  if (isMobile()) {
+    Visibility.change((event, state) => {
+      if (state === 'visible') {
+        gbfRaidServer = onVisble()
+      } else {
+        gbfRaidServer.close()
+      }
+    })
+  }
 
   return store
 }
