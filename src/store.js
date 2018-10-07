@@ -7,8 +7,12 @@ import createPersistedState from 'vuex-persistedstate'
 import isMobile from 'is-mobile'
 import Visibility from 'visibilityjs'
 
-const jsonBossesUrl = 'https://unpkg.com/@59naga/gbf-data/dist/raid.json'
-const gbfRaidServerUrls = ['https://gbf-raid-server.herokuapp.com/', 'https://gbf-raid-server-sub.herokuapp.com/', 'https://gbf-raid-server-extra.herokuapp.com/']
+const jsonBossesUrl = 'https://unpkg.com/gbf-data/dist/raid.json'
+const gbfRaidServerUrls = [
+  'https://gbf-raid-server.herokuapp.com/',
+  'https://gbf-raid-server-sub.herokuapp.com/',
+  'https://gbf-raid-server-extra.herokuapp.com/'
+]
 
 function createSocketAsync(urls) {
   const firstFulfilled = Promise.race(
