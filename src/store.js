@@ -9,7 +9,7 @@ import Visibility from 'visibilityjs'
 
 const jsonBossesUrl = 'https://unpkg.com/gbf-data/dist/raid.json'
 const gbfRaidServerUrls = [
-  'http://v157-7-52-20.z1d20.static.cnode.jp/'
+  'https://v157-7-52-20.z1d20.static.cnode.jp/'
   // 'https://gbf-raid-server.herokuapp.com/',
   // 'https://gbf-raid-server-sub.herokuapp.com/',
   // 'https://gbf-raid-server-extra.herokuapp.com/'
