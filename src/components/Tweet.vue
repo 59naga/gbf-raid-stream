@@ -1,5 +1,5 @@
 <template>
-  <li @click="doCopy(data.tweet)" :class="{copied}">
+  <li :class="{copied}" @click="doCopy(data.tweet)">
     <figure><img :src="data.boss.image || data.tweet.urlImage" alt=""></figure>
     <figcaption>
       <h2>{{ data | localize($store.state) }}</h2>
@@ -22,9 +22,9 @@ export default {
     data: { type: Object, required: true }
   },
   computed: {
-    copied(){
+    copied() {
       const copied = this.$store.state.copied
-      return copied.indexOf(this.data.tweet.id) > -1;
+      return copied.indexOf(this.data.tweet.id) > -1
     }
   },
   methods: {
@@ -32,9 +32,10 @@ export default {
       // https://github.com/vuejs/Discussion/issues/405#issuecomment-142089920
       const localizedName = this.$options.filters.localize(this.data, this.$store.state)
       const localizedTime = this.$options.filters.moment(this.data.tweet.createdAt, 'from', 'now')
-      let title = `${tweet.id}／${localizedName} ${localizedTime}`
+      const title = `${tweet.id}／${localizedName} ${localizedTime}`
+      const copyText = localizedName.match(/[A-Z0-9Ａ-Ｚ０-９]/) ? tweet.id : title // See: gbf-raid-stream#4
 
-      await this.$copyText(title)
+      await this.$copyText(copyText)
       this.$toasted.show(`コピー：${title}`, {
         position: 'top-center',
         duration: 1000
