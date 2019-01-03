@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "gbf-raid-stream",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "NODE_ENV=production webpack",
