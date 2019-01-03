@@ -32,7 +32,7 @@ export default {
       // https://github.com/vuejs/Discussion/issues/405#issuecomment-142089920
       const localizedName = this.$options.filters.localize(this.data, this.$store.state)
       const localizedTime = this.$options.filters.moment(this.data.tweet.createdAt, 'from', 'now')
-      const title = `${tweet.id} ${localizedName} ${localizedTime}`
+      let title = `${tweet.id}／${localizedName} ${localizedTime}`
 
       await this.$copyText(title)
       this.$toasted.show(`コピー：${title}`, {

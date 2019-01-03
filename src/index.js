@@ -33,7 +33,7 @@
     }
 
     let short = nameLocaled.replace(/Lv\d+ /, '')
-    if (category.match('impossible')) {
+    if (category.match('impossible') && !short.match(/HL$/)) {
       short += 'HL'
     }
     if (category.match('misc')) {
