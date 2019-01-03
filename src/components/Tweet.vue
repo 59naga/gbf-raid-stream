@@ -1,8 +1,8 @@
 <template>
   <li @click="doCopy(data.tweet)" :class="{copied}">
-    <figure><img :src="data.boss.image" alt=""></figure>
+    <figure><img :src="data.boss.image || data.tweet.urlImage" alt=""></figure>
     <figcaption>
-      <h2>{{ data.boss.name | localize($store.state) }}</h2>
+      <h2>{{ data | localize($store.state) }}</h2>
       <p>
         <a :href="'https://' + data.tweet.urlOrigin" target="_blank">
           <img :src="data.tweet.urlProfile" alt="">
@@ -30,7 +30,7 @@ export default {
   methods: {
     async doCopy(tweet) {
       // https://github.com/vuejs/Discussion/issues/405#issuecomment-142089920
-      const localizedName = this.$options.filters.localize(this.data.boss.name, this.$store.state)
+      const localizedName = this.$options.filters.localize(this.data, this.$store.state)
       const localizedTime = this.$options.filters.moment(this.data.tweet.createdAt, 'from', 'now')
       const title = `${tweet.id} ${localizedName} ${localizedTime}`
 

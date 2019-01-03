@@ -19,7 +19,8 @@
   Vue.use(VueClipboard2)
   Vue.use(VueMoment, { moment })
 
-  Vue.filter('localize', function(name, state) {
+  Vue.filter('localize', function(data, state) {
+    const name = data.boss ? data.boss.name || data.tweet.name : data
     const index = state.indexes[name]
     const boss = state.bosses[index] || {}
     const category = boss.category || 'unknown'
