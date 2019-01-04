@@ -1,6 +1,7 @@
 <template>
   <li :class="{copied}" @click="doCopy(data.tweet)">
-    <figure><img :src="data.boss.image || data.tweet.urlImage" alt=""></figure>
+    <figure v-if="data.boss.image"><img :src="data.boss.image" alt=""></figure>
+    <figure v-else><tco-img :cache-name="data.boss.name || data.tweet.name" :src="data.tweet.urlImage"/></figure>
     <figcaption>
       <h2>{{ data | localize($store.state) }}</h2>
       <p>
@@ -16,8 +17,12 @@
 </template>
 
 <script>
+import TcoImg from './TcoImg'
 // TODO: 全く同じ内容のオブジェクトがtweetsに存在するときがある
 export default {
+  components: {
+    TcoImg
+  },
   props: {
     data: { type: Object, required: true }
   },
