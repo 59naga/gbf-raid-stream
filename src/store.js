@@ -68,7 +68,8 @@ export default () => {
       bosses: [],
       categories: [],
       indexes: {},
-      initialized: false
+      initialized: false,
+      supportedAC: null
     },
     plugins: [createPersistedState({ paths: ['tabs', 'copied', 'options'] })],
     mutations: {
@@ -124,6 +125,9 @@ export default () => {
         if (state.copied.length > 10) {
           state.copied.pop()
         }
+      },
+      setSupportedAC(state, supportedAC) {
+        state.supportedAC = supportedAC
       }
     },
     actions: {
@@ -167,6 +171,12 @@ export default () => {
       }
     }
   })
+
+  if (navigator.permissions) {
+    navigator.permissions.query({ name: 'clipboard-write' }).then(permissionStatus => {
+      store.commit('setSupportedAC', permissionStatus.state === 'granted')
+    })
+  }
 
   // ウィンドウが非アクティブになった時socket.ioを切断し、再度アクティブになった時にinitializeを再度実行する
   const onVisble = () => {

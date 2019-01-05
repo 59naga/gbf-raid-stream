@@ -18,6 +18,7 @@
 
 <script>
 import TcoImg from './TcoImg'
+
 // TODO: 全く同じ内容のオブジェクトがtweetsに存在するときがある
 export default {
   components: {
@@ -40,13 +41,25 @@ export default {
       const title = `${tweet.id}／${localizedName} ${localizedTime}`
       const copyText = localizedName.match(/[A-Z0-9Ａ-Ｚ０-９]/) ? tweet.id : title // See: gbf-raid-stream#4
 
-      await this.$copyText(copyText)
-      this.$toasted.show(`コピー：${title}`, {
-        position: 'top-center',
-        duration: 1000
-      })
+      try {
+        if (navigator.permissions) {
+          await navigator.clipboard.writeText(copyText)
+        } else {
+          await this.$copyText(copyText)
+        }
+        this.$toasted.show(`コピー：${title}`, {
+          position: 'top-center',
+          duration: 1000
+        })
 
-      this.$store.commit('copied', tweet)
+        this.$store.commit('copied', tweet)
+      } catch (error) {
+        this.$toasted.show(error, {
+          type: 'error',
+          position: 'top-center',
+          duration: 1000
+        })
+      }
     }
   }
 }

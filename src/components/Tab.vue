@@ -16,6 +16,7 @@
         <tweet
           v-for="data in target"
           :key="data.tweet.urlOrigin"
+          :ref="data.tweet.id"
           :data="data"
         />
       </ul>
@@ -60,7 +61,11 @@
         </label>
         <label>
           <input v-model="$store.state.options.sound" type="checkbox">
-          Sound On
+          Sound
+        </label>
+        <label v-if="$store.state.supportedAC">
+          <input v-model="$store.state.options.ac" type="checkbox">
+          AC(β)
         </label>
       </div>
       <h1>
@@ -116,6 +121,13 @@ export default {
       if (prevId && prevId !== id && prevTabIds === tabIds) {
         if (options.sound) {
           sound.play()
+        }
+        if (options.ac && navigator.permissions) {
+          setTimeout(() => {
+            const tweet = target[0].tweet
+            const [tweetComponent] = this.$refs[tweet.id] || []
+            tweetComponent.doCopy(tweet)
+          })
         }
       }
       prevId = id
