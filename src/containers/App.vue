@@ -23,5 +23,6 @@ div::after {
   background: url('background.png') no-repeat center center;
   opacity: 0.1;
   z-index: -1;
+  max-width: 680px;
 }
 </style>
