@@ -8,39 +8,7 @@ import isMobile from 'is-mobile'
 import Visibility from 'visibilityjs'
 
 const jsonBossesUrl = 'https://unpkg.com/gbf-data/dist/raid.json'
-const gbfRaidServerUrls = [
-  'https://v157-7-52-20.z1d20.static.cnode.jp/'
-  // 'https://gbf-raid-server.herokuapp.com/',
-  // 'https://gbf-raid-server-sub.herokuapp.com/',
-  // 'https://gbf-raid-server-extra.herokuapp.com/'
-]
-
-function createSocketAsync(urls) {
-  const firstFulfilled = Promise.race(
-    urls.map(url =>
-      new Promise((resolve, reject) => {
-        const client = createIoClient(url)
-        client.on('connect', () => {
-          resolve(client)
-        })
-        client.on('error', error => {
-          client.close()
-          reject(error)
-        })
-      }).then(client => {
-        // 始めの接続以外を破棄
-        ;(async resolve => {
-          const first = await firstFulfilled
-          if (first !== client) {
-            client.disconnect()
-          }
-        })()
-        return client
-      })
-    )
-  )
-  return firstFulfilled
-}
+const gbfRaidServerUrl = 'https://v157-7-52-20.z1d20.static.cnode.jp/'
 
 function fetchCache(gbfRaidServer) {
   return new Promise((resolve, reject) => {
@@ -69,7 +37,7 @@ export default () => {
       categories: [],
       indexes: {},
       initialized: false,
-      supportedAC: null
+      allowedAC: null
     },
     plugins: [createPersistedState({ paths: ['tabs', 'copied', 'options'] })],
     mutations: {
@@ -126,8 +94,8 @@ export default () => {
           state.copied.pop()
         }
       },
-      setSupportedAC(state, supportedAC) {
-        state.supportedAC = supportedAC
+      allowAC(state, permissionState) {
+        state.allowedAC = permissionState === 'granted' || permissionState === 'prompt'
       }
     },
     actions: {
@@ -142,7 +110,7 @@ export default () => {
       async initialize({ commit }) {
         commit('initialize')
 
-        gbfRaidServer = await createSocketAsync(gbfRaidServerUrls)
+        gbfRaidServer = createIoClient(gbfRaidServerUrl)
         gbfRaidServer.on('gbf-raid-server:tweet', tweet => {
           store.commit('tweet', tweet)
         })
@@ -174,7 +142,10 @@ export default () => {
 
   if (navigator.permissions) {
     navigator.permissions.query({ name: 'clipboard-write' }).then(permissionStatus => {
-      store.commit('setSupportedAC', permissionStatus.state === 'granted')
+      store.commit('allowAC', permissionStatus.state)
+      permissionStatus.addEventListener('change', () => {
+        store.commit('allowAC', permissionStatus.state)
+      })
     })
   }
 

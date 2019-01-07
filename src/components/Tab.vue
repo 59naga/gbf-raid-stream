@@ -63,7 +63,7 @@
           <input v-model="$store.state.options.sound" type="checkbox">
           Sound
         </label>
-        <label v-if="$store.state.supportedAC">
+        <label v-if="$store.state.allowedAC">
           <input v-model="$store.state.options.ac" type="checkbox">
           AC(β)
         </label>

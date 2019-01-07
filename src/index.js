@@ -2,7 +2,6 @@
   const Vue = await import(/* webpackChunkName: "vue" */ 'vue')
   const Vuex = await import(/* webpackChunkName: "vuex" */ 'vuex')
   const VueToasted = await import(/* webpackChunkName: "vue-toasted" */ 'vue-toasted')
-  const VueClipboard2 = await import(/* webpackChunkName: "vue-clipboard2" */ 'vue-clipboard2')
   const VueMoment = await import(/* webpackChunkName: "vue-moment" */ 'vue-moment')
 
   await import('moment/locale/es')
@@ -16,7 +15,6 @@
 
   Vue.use(Vuex)
   Vue.use(VueToasted)
-  Vue.use(VueClipboard2)
   Vue.use(VueMoment, { moment })
 
   Vue.filter('localize', function(data, state) {

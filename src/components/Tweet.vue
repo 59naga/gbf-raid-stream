@@ -17,7 +17,19 @@
 </template>
 
 <script>
+import copy from 'clipboard-copy'
 import TcoImg from './TcoImg'
+
+let handshaken
+window.addEventListener(
+  'message',
+  event => {
+    if (event.data === 'handshake') {
+      handshaken = event
+    }
+  },
+  false
+)
 
 // TODO: 全く同じ内容のオブジェクトがtweetsに存在するときがある
 export default {
@@ -42,11 +54,14 @@ export default {
       const copyText = localizedName.match(/[A-Z0-9Ａ-Ｚ０-９]/) ? tweet.id : title // See: gbf-raid-stream#4
 
       try {
-        if (navigator.permissions) {
+        if (handshaken) {
+          handshaken.source.postMessage(copyText, handshaken.origin)
+        } else if (navigator.permissions) {
           await navigator.clipboard.writeText(copyText)
         } else {
-          await this.$copyText(copyText)
+          await copy(copyText)
         }
+
         this.$toasted.show(`コピー：${title}`, {
           position: 'top-center',
           duration: 1000
@@ -54,10 +69,10 @@ export default {
 
         this.$store.commit('copied', tweet)
       } catch (error) {
-        this.$toasted.show(error, {
-          type: 'error',
+        this.$toasted.show(`コピー失敗：${title}`, {
           position: 'top-center',
-          duration: 1000
+          duration: 1000,
+          type: 'error'
         })
       }
     }
