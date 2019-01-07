@@ -1,0 +1,30 @@
+{
+  "name": "@gbf-raid-stream/app",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "electron-webpack dev",
+    "format": "prettier \"src/**/*.js\" --write",
+    "compile": "electron-webpack",
+    "prebuild": "yarn compile",
+    "build": "abby build:*",
+    "build:mac": "electron-builder --mac --x64",
+    "build:win": "electron-builder --win --x64",
+    "build:linux": "electron-builder --linux --x64",
+    "dist": "yarn compile && electron-builder",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+  },
+  "dependencies": {
+    "source-map-support": "^0.5.9",
+    "spawn-sync": "^2.0.0"
+  },
+  "devDependencies": {
+    "abigail": "^1.9.5",
+    "clipboardy": "^1.2.3",
+    "electron": "3.0.10",
+    "electron-builder": "^20.36.2",
+    "electron-webpack": "^2.6.1",
+    "prettier": "^1.15.3",
+    "webpack": "^4.26.0"
+  }
+}
