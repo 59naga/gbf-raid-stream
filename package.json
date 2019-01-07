@@ -1,5 +1,5 @@
 {
-  "name": "@gbf-raid-stream/app",
+  "name": "gbf-raid-stream-app",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
