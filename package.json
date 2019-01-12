@@ -1,6 +1,6 @@
 {
-  "name": "gbf-raid-stream-app",
-  "version": "0.0.0",
+  "name": "gbf-raid-stream.now.sh",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",

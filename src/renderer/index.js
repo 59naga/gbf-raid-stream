@@ -1,6 +1,6 @@
 import clipboardy from "clipboardy";
 
-const origin = "https://gbf-raid-stream-nszcupcclj.now.sh";
+const origin = "https://gbf-raid-stream.now.sh";
 
 document.head.innerHTML +=
   "<style>body{margin:0}iframe{width:100vw;height:100vh}</style>";
