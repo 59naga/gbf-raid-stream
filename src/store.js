@@ -154,7 +154,7 @@ export default () => {
   }
 
   Visibility.change((event, state) => {
-    store.dispatch('visibility', state)
+    store.commit('visibility', state)
   })
 
   // ウィンドウが非アクティブになった時socket.ioを切断し、再度アクティブになった時にinitializeを再度実行する
