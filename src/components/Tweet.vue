@@ -51,7 +51,7 @@ export default {
       const localizedName = this.$options.filters.localize(this.data, this.$store.state)
       const localizedTime = this.$options.filters.moment(this.data.tweet.createdAt, 'from', 'now')
       const title = `${tweet.id}／${localizedName} ${localizedTime}`
-      const copyText = localizedName.match(/[A-Z0-9Ａ-Ｚ０-９]/) ? tweet.id : title // See: gbf-raid-stream#4
+      const copyText = localizedName[0].match(/[A-Z0-9Ａ-Ｚ０-９]/) ? tweet.id : title // See: gbf-raid-stream#4
 
       try {
         if (handshaken) {
@@ -62,14 +62,14 @@ export default {
           await copy(copyText)
         }
 
-        this.$toasted.show(`コピー：${title}`, {
+        this.$store.state.visibility === 'visible' && this.$toasted.show(`コピー：${title}`, {
           position: 'top-center',
           duration: 1000
         })
 
         this.$store.commit('copied', tweet)
       } catch (error) {
-        this.$toasted.show(`コピー失敗：${title}`, {
+        this.$store.state.visibility === 'visible' && this.$toasted.show(`コピー失敗：${title}`, {
           position: 'top-center',
           duration: 1000,
           type: 'error'

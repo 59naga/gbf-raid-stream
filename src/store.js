@@ -26,6 +26,7 @@ export default () => {
   let gbfRaidServer
   const store = new Vuex.Store({
     state: {
+      visibility: 'visible',
       tabs: [[]],
       copied: [],
       options: {
@@ -73,6 +74,9 @@ export default () => {
       },
 
       // handlers
+      visibility(state, visibility) {
+        state.visibility = visibility
+      },
       reset(state) {
         state.tabs[0].splice(0, state.tabs[0].length)
       },
@@ -148,6 +152,10 @@ export default () => {
       })
     })
   }
+
+  Visibility.change((event, state) => {
+    store.dispatch('visibility', state)
+  })
 
   // ウィンドウが非アクティブになった時socket.ioを切断し、再度アクティブになった時にinitializeを再度実行する
   const onVisble = () => {
