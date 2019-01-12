@@ -15,16 +15,15 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
-    "source-map-support": "^0.5.9",
-    "spawn-sync": "^2.0.0"
+    "source-map-support": "^0.5.9"
   },
   "devDependencies": {
     "abigail": "^1.9.5",
-    "clipboardy": "^1.2.3",
     "electron": "3.0.10",
     "electron-builder": "^20.36.2",
     "electron-webpack": "^2.6.1",
     "prettier": "^1.15.3",
+    "spawn-sync": "^2.0.0",
     "webpack": "^4.26.0"
   }
 }

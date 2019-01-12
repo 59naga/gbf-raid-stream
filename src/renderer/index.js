@@ -1,4 +1,4 @@
-import clipboardy from "clipboardy";
+import { clipboard } from "electron";
 
 const origin = "https://gbf-raid-stream.now.sh";
 
@@ -15,7 +15,9 @@ iframe.addEventListener("load", () => {
       if (event.origin !== origin) {
         return;
       }
-      clipboardy.writeSync(event.data);
+      clipboard.writeText(event.data);
+
+      new Notification(event.data, { silent: true });
     },
     false
   );
