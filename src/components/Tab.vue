@@ -126,7 +126,7 @@ export default {
           setTimeout(() => {
             const tweet = target[0].tweet
             const [tweetComponent] = this.$refs[tweet.id] || []
-            tweetComponent.doCopy(tweet)
+            tweetComponent.doCopy(tweet, true)
           })
         }
       }

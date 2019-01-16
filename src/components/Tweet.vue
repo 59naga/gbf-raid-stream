@@ -46,7 +46,7 @@ export default {
     }
   },
   methods: {
-    async doCopy(tweet) {
+    async doCopy(tweet, notify = false) {
       // https://github.com/vuejs/Discussion/issues/405#issuecomment-142089920
       const localizedName = this.$options.filters.localize(this.data, this.$store.state)
       const localizedTime = this.$options.filters.moment(this.data.tweet.createdAt, 'from', 'now')
@@ -54,26 +54,37 @@ export default {
       const copyText = localizedName[0].match(/[A-Z0-9Ａ-Ｚ０-９]/) ? tweet.id : title // See: gbf-raid-stream#4
 
       try {
-        if (handshaken) {
-          handshaken.source.postMessage(copyText, handshaken.origin)
+        if (handshaken && notify) {
+          handshaken.source.postMessage(
+            JSON.stringify({
+              id: tweet.id,
+              name: localizedName,
+              memo: this.data.tweet.memo,
+              image: this.data.boss.image
+            }),
+            handshaken.origin
+          )
         } else if (navigator.permissions) {
           await navigator.clipboard.writeText(copyText)
         } else {
           await copy(copyText)
         }
 
-        this.$store.state.visibility === 'visible' && this.$toasted.show(`コピー：${title}`, {
-          position: 'top-center',
-          duration: 1000
-        })
+        this.$store.state.visibility === 'visible' &&
+          this.$toasted.show(`コピー：${title}`, {
+            position: 'top-center',
+            duration: 1000
+          })
 
         this.$store.commit('copied', tweet)
       } catch (error) {
-        this.$store.state.visibility === 'visible' && this.$toasted.show(`コピー失敗：${title}`, {
-          position: 'top-center',
-          duration: 1000,
-          type: 'error'
-        })
+        console.error(error)
+        this.$store.state.visibility === 'visible' &&
+          this.$toasted.show(`コピー失敗：${title}`, {
+            position: 'top-center',
+            duration: 1000,
+            type: 'error'
+          })
       }
     }
   }
