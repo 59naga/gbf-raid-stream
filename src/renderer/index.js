@@ -2,7 +2,7 @@ import { clipboard } from "electron";
 
 // const origin = "https://gbf-raid-stream.now.sh";
 // const origin = "http://localhost:8080";
-const origin = "https://gbf-raid-stream-brdjvcbcre.now.sh";
+const origin = "http://v157-7-52-20.z1d20.static.cnode.jp/";
 
 document.head.innerHTML +=
   "<style>body{margin:0}iframe{width:100vw;height:100vh}</style>";
