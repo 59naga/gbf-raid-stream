@@ -35,7 +35,7 @@ function createMainWindow() {
   }
 
   window.on("closed", () => {
-    session.defaultSession.clearCache(() => {})
+    session.defaultSession.clearCache(() => {});
     mainWindow = null;
   });
 

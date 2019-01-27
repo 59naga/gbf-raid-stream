@@ -15,6 +15,7 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "clipboardy": "^1.2.3",
     "source-map-support": "^0.5.9"
   },
   "devDependencies": {
