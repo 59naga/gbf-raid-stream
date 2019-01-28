@@ -64,7 +64,7 @@ export default {
             }),
             handshaken.origin
           )
-        } else if (navigator.permissions) {
+        } else if (navigator.permissions && navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(copyText)
         } else {
           await copy(copyText)
