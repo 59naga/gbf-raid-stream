@@ -8,7 +8,7 @@ import isMobile from 'is-mobile'
 import Visibility from 'visibilityjs'
 
 const jsonBossesUrl = 'https://unpkg.com/gbf-data@0.0.27/dist/raid.json'
-const gbfRaidServerUrl = 'http://v157-7-52-20.z1d20.static.cnode.jp/'
+const gbfRaidServerUrl = 'https://v157-7-52-20.z1d20.static.cnode.jp/'
 
 function fetchCache(gbfRaidServer) {
   return new Promise((resolve, reject) => {
