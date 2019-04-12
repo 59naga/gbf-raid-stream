@@ -29,7 +29,6 @@
     if (!boss.name) {
       return nameLocaled
     }
-
     let short = nameLocaled.replace(/Lv\d+ /, '')
     if (category.match('impossible') && !short.match(/HL$/)) {
       short += 'HL'
@@ -38,6 +37,12 @@
       if (boss.name.match(/^Lv20/)) short += 'N'
       if (boss.name.match(/^Lv50/)) short += 'H'
       if (boss.name.match(/^Lv60/)) short += 'H+'
+    }
+    if (nameLocaled === 'Lv150 ルシファー') {
+      short = 'ダーク・ラプチャー'
+    }
+    if (nameLocaled === 'Lv250 ルシファー') {
+      short = 'ダーク・ラプチャー(HARD)'
     }
 
     return short

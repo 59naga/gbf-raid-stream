@@ -1,9 +1,9 @@
 <template>
-  <label>
+  <label :class="{dlh:boss.name.match(/250/)}">
     <input
-      type="checkbox"
       v-model="checked"
       :bind="$store.state.tabs"
+      type="checkbox"
     >
     {{ boss.name | localize($store.state) }}
   </label>
@@ -35,5 +35,9 @@ label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+label.dlh {
+  width: 66%;
 }
 </style>
